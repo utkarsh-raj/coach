@@ -5,6 +5,7 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.chains.combine_documents import create_stuff_documents_chain
 
 llm = ChatOpenAI()
 
@@ -32,4 +33,15 @@ print(docs)
 text_splitter = RecursiveCharacterTextSplitter()
 documents = text_splitter.split_documents(docs)
 vector = FAISS.from_documents(documents, embeddings)
+
+
+prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
+
+<context>
+{context}
+</context>
+
+Question: {input}""")
+
+document_chain = create_stuff_documents_chain(llm, prompt)
 
