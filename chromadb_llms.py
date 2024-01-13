@@ -28,3 +28,10 @@ collection.add(
 
 print(collection.peek()) # returns a list of the first 10 items in the collection
 print(collection.count()) # returns the number of items in the collection
+
+res1 = collection.query(
+    query_texts=["XLR8"],
+    n_results=1
+)
+
+print(res1)
